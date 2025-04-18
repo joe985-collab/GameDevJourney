@@ -27,7 +27,7 @@ old_key = null
 // var my_square = new Square(100,100,20)
 shape_arr = [new Square(100,100,20),new Square(120,100,20),new Square(140,100,20)]
 movement_obj = {"ArrowLeft":[-20,0],"ArrowRight":[20,0],"ArrowUp":[0,-20],"ArrowDown":[0,20]}
-
+var flag = true
 function sum_arrays(nums1,nums2){
   return nums1.map((a,i)=>a+nums2[i])
 }
@@ -58,10 +58,11 @@ function init() {
           context.clearRect(0,0,canvas.width,canvas.height)
           if (old_key){
             test = sum_arrays(movement_obj[my_key],movement_obj[old_key])
-            console.log("test: ",test)
+            // console.log("test: ",test)
             cond = test[0]===0 && test[1]===0
+          
           }
-      
+       
           if(!old_key){
             x += movement_obj[my_key][0]
             y += movement_obj[my_key][1]
@@ -80,15 +81,13 @@ function init() {
             }
           
           }else{
-            if(!cond){
-              x += movement_obj[my_key][0]
-              y += movement_obj[my_key][1]
-              shape_arr.shift()
-              shape_arr.push(new Square(x,y,20))
-            }else{
-              shape_arr.shift()
-              shape_arr.push(new Square(x,y,20))
+            if(cond){
+              my_key = old_key
             }
+            x += movement_obj[my_key][0]
+            y += movement_obj[my_key][1]
+            shape_arr.shift()
+            shape_arr.push(new Square(x,y,20))           
             shape_arr.forEach(element => {
               element.draw()
             });
@@ -102,7 +101,7 @@ function init() {
       // if (y > 1000) { y = 1; }
       // moveImage(x, y);
       
-    }, 100);  
+    }, 600);  
 
   };
   
